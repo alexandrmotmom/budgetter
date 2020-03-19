@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  bot:
+    build: .
+    environment:
+      SANIC_APP: budgetter.app:app
+      TELEGRAMM_TOKEN: 1075271083:AAE1yH8RrttmQAxOth8s2fPZcwL_wPVS8n0
+    volumes:
+      - ./budgetter:/app/budgetter
+    ports:
+      - "7773:5000"
+    command: gunicorn -b 0.0.0.0:5000 budgetter.app:main()--reload --log-level=info --timeout 300 --worker-class
+    stdin_open: true
+    tty: true
